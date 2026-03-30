@@ -32,11 +32,8 @@ export default function Home() {
       formData.append('image_file', image.file)
       formData.append('size', 'auto')
 
-      const response = await fetch('https://api.remove.bg/v1.0/removebg', {
+      const response = await fetch('/api/remove-bg', {
         method: 'POST',
-        headers: {
-          'X-Api-Key': 'XZ47JcE5SFopkYN5SPzrAWiV'
-        },
         body: formData,
       })
 
