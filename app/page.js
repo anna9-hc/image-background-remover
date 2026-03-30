@@ -30,9 +30,13 @@ export default function Home() {
     try {
       const formData = new FormData()
       formData.append('image_file', image.file)
+      formData.append('size', 'auto')
 
-      const response = await fetch('/api/remove-bg', {
+      const response = await fetch('https://api.remove.bg/v1.0/removebg', {
         method: 'POST',
+        headers: {
+          'X-Api-Key': 'XZ47JcE5SFopkYN5SPzrAWiV'
+        },
         body: formData,
       })
 
@@ -40,8 +44,8 @@ export default function Home() {
         const blob = await response.blob()
         setResult(URL.createObjectURL(blob))
       } else {
-        const err = await response.json()
-        setError(err.error || '处理失败')
+        const err = await response.json().catch(() => ({}))
+        setError(err?.errors?.[0]?.title || '处理失败，请稍后重试')
       }
     } catch (err) {
       setError('网络错误，请重试')
